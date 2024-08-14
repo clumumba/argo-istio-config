@@ -1,0 +1,52 @@
+# istio-values.yaml
+
+# Sample configurations to override Istio default values
+global:
+  proxy:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+  imagePullPolicy: IfNotPresent
+
+pilot:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+
+telemetry:
+  enabled: true
+
+tracing:
+  enabled: true
+
+---
+# server:
+#   resources:
+#     requests:
+#       memory: 256Mi
+#       cpu: 100m
+#     limits:
+#       memory: 512Mi
+#       cpu: 200m
+#   configMapReload:
+#     resources:
+#       requests:
+#         memory: 50Mi
+#         cpu: 10m
+#       limits:
+#         memory: 100Mi
+#         cpu: 20m
+
+# telemetry:
+#   enabled: true
+
+# tracing:
+#   enabled: true

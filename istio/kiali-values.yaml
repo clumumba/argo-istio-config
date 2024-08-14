@@ -1,0 +1,14 @@
+# Sample values for Kiali installation
+kiali:
+  auth:
+    strategy: anonymous
+  external_services:
+    prometheus:
+      url: "http://prometheus.prometheus:9090"
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      memory: 512Mi
+      cpu: 200m

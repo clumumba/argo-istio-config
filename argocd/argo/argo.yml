@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argo
+  labels:
+    app: my-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: my-app
+      version: v1.0.0
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: my-app
+        version: v1.0.0
+    spec:
+       containers:
+       - name: my-app
+         image: busybox
+         ports:
+         - containerPort: 8002
+         resources:
+          limits:
+           memory: "100Mi"
+           cpu: "200m"
+          requests:
+           memory: "100Mi"
