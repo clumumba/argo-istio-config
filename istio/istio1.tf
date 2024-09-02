@@ -32,7 +32,7 @@ resource "helm_release" "istio_base" {
   name            = "istio-base"
   namespace       = kubernetes_namespace.istio_system.metadata[0].name
   chart           = "base"
-  repository      = local.istio_charts_url 
+  repository      = local.istio_charts_url
   cleanup_on_fail = true
   force_update    = false
 
@@ -59,11 +59,12 @@ resource "helm_release" "istiod" {
 
 # Install Istio Ingress Gateway
 resource "helm_release" "istio_ingress_gateway" {
-  name       = "istio-ingress"
+  name       = "istio-ingressgateway"
   namespace  = kubernetes_namespace.istio_system.metadata[0].name
   chart      = "gateway"
   repository = local.istio_charts_url
   version    = "1.22.3" # Specify the Istio version you want to install
+  timeout    = 800
 
   depends_on = [helm_release.istiod]
 }
@@ -88,6 +89,7 @@ resource "helm_release" "prometheus" {
   chart      = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
   version    = "15.2.0" # Specify the Prometheus chart version you want to install
+  timeout    = 600
 
   values = [
     file("${path.module}/prometheus-values.yaml")
@@ -110,3 +112,5 @@ resource "helm_release" "kiali" {
 
   depends_on = [kubernetes_namespace.istio_system, helm_release.istiod, helm_release.prometheus]
 }
+
+

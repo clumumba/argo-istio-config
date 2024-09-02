@@ -7,8 +7,8 @@ kiali:
       url: "http://prometheus.prometheus:9090"
   resources:
     requests:
-      memory: 256Mi
-      cpu: 100m
+      memory: "512Mi"
+      cpu: "500m"
     limits:
-      memory: 512Mi
-      cpu: 200m
+      memory: "1024Mi"
+      cpu: "1m"

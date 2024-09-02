@@ -7,9 +7,9 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/clumumba/argocdtest.git
+    repoURL: https://github.com/clumumba/argo-istio-config.git
     targetRevision: HEAD
-    path: argo
+    path: argocd/argo
   destination:
     server: https://kubernetes.default.svc
     namespace: my-app
