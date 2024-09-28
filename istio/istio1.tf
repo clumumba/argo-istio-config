@@ -46,6 +46,7 @@ resource "helm_release" "istiod" {
   chart           = "istiod"
   repository      = local.istio_charts_url
   version         = "1.22.3" # Specify the Istio version you want to install
+  timeout         = 1200
   cleanup_on_fail = true
   force_update    = false
 
@@ -58,16 +59,16 @@ resource "helm_release" "istiod" {
 }
 
 # Install Istio Ingress Gateway
-resource "helm_release" "istio_ingress_gateway" {
-  name       = "istio-ingressgateway"
-  namespace  = kubernetes_namespace.istio_system.metadata[0].name
-  chart      = "gateway"
-  repository = local.istio_charts_url
-  version    = "1.22.3" # Specify the Istio version you want to install
-  timeout    = 800
+# resource "helm_release" "istio_ingress_gateway" {
+#   name       = "istio-ingressgateway"
+#   namespace  = kubernetes_namespace.istio_system.metadata[0].name
+#   chart      = "gateway"
+#   repository = local.istio_charts_url
+#   version    = "1.22.3" # Specify the Istio version you want to install
+#   timeout    = 800
 
-  depends_on = [helm_release.istiod]
-}
+#   depends_on = [helm_release.istiod]
+# }
 
 
 resource "kubernetes_labels" "example" {
@@ -88,7 +89,7 @@ resource "helm_release" "prometheus" {
   namespace  = kubernetes_namespace.istio_system.metadata[0].name
   chart      = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
-  version    = "15.2.0" # Specify the Prometheus chart version you want to install
+  #version    = "15.2.0" # Specify the Prometheus chart version you want to install
   timeout    = 600
 
   values = [
@@ -105,6 +106,7 @@ resource "helm_release" "kiali" {
   chart      = "kiali-server"
   repository = "https://kiali.org/helm-charts"
   version    = "1.82.0" # Specify the Kiali chart version you want to install
+  timeout = 1200
 
   values = [
     file("${path.module}/kiali-values.yaml")
@@ -113,4 +115,16 @@ resource "helm_release" "kiali" {
   depends_on = [kubernetes_namespace.istio_system, helm_release.istiod, helm_release.prometheus]
 }
 
+/*
+resource "helm_release" "grafana" {
+  name       = "grafana"
+  namespace  = kubernetes_namespace.istio_system.metadata[0].name
+  chart      = "Grafana"
+  repository = "https://grafana.github.io/helm-charts"
+  timeout    = 300
+  
 
+   depends_on = [kubernetes_namespace.istio_system, helm_release.prometheus]
+
+}
+*/
