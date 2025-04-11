@@ -90,7 +90,7 @@ resource "helm_release" "prometheus" {
   chart      = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
   #version    = "15.2.0" # Specify the Prometheus chart version you want to install
-  timeout    = 600
+  timeout = 600
 
   values = [
     file("${path.module}/prometheus-values.yaml")
@@ -106,7 +106,7 @@ resource "helm_release" "kiali" {
   chart      = "kiali-server"
   repository = "https://kiali.org/helm-charts"
   version    = "1.82.0" # Specify the Kiali chart version you want to install
-  timeout = 1200
+  timeout    = 1200
 
   values = [
     file("${path.module}/kiali-values.yaml")

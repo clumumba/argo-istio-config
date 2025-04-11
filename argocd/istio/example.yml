@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mane
+  name: mane
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mane
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mane
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
